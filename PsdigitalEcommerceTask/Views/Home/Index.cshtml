@@ -1,0 +1,20 @@
+﻿@using PsdigitalEcommerceTask.Models;
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @if (ViewBag.Products.Count > 0)
+    {
+        foreach (Product Item in ViewBag.Products)
+        {
+            @Html.Partial("Partials/_ProductCard", Item)
+
+        }
+
+    }else
+    {
+        <p>No Products</p>
+     }
+
+</div>
