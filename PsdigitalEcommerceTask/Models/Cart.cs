@@ -9,7 +9,8 @@ namespace PsdigitalEcommerceTask.Models
     [Table("Cart")]
     public partial class Cart
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int ProductId { get; set; }

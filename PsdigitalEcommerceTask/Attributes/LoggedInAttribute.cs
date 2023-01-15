@@ -12,7 +12,7 @@ namespace PsdigitalEcommerceTask.Attributes
         {
             if (HttpContext.Current.Session["userid"] == null)
             {
-                filterContext.Result = new RedirectResult("/?returnto=" + filterContext.HttpContext.Request.RawUrl);
+                filterContext.Result = new RedirectResult("/Account/Login/?returnto=" + filterContext.HttpContext.Request.RawUrl);
             }
         }
     }

@@ -4,8 +4,8 @@
         <img src="/Images/Product/@Model.Image" class="card-img-top" alt="@Model.Title">
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
-            <p class="card-text">@Model.Price <span class="currency">EGP</span></p> 
-            <a href="#" class="btn btn-primary">Add To Cart</a>
+            <p class="card-text">@Model.Price <span class="currency">EGP</span></p>
+            @Html.ActionLink("Add To Cart", "AddToCart","Cart", new { id = Model.Id}, new { @class = "btn btn-primary" })
         </div>
     </div>
 </div>

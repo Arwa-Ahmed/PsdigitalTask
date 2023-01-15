@@ -14,8 +14,8 @@ namespace PsdigitalEcommerceTask.Models
         {
             Carts = new HashSet<Cart>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
