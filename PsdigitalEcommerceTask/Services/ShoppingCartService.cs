@@ -16,7 +16,7 @@ namespace PsdigitalEcommerceTask.Services
         {
             _unitOfWork = unitOfWork;
         }
-        string ShoppingCartId { get; set; }
+        public string ShoppingCartId { get; set; }
         public const string CartCookieKey = "CartId";
         public static ShoppingCartService GetCart(HttpContextBase context)
         { 
@@ -119,11 +119,11 @@ namespace PsdigitalEcommerceTask.Services
                         _unitOfWork.Save();
 
                         CookieService.Save(CartCookieKey, NewCartSession.Id.ToString(),context);
-                    }else if (context.Request.Cookies[CartCookieKey] == null)
-                    {
-                        CookieService.Save(CartCookieKey, CartSession.Id.ToString(),context);
                     }
-                    
+                    else
+                    {
+                        CookieService.Save(CartCookieKey, CartSession.Id.ToString(), context);
+                    }
                 }
                 else
                 {

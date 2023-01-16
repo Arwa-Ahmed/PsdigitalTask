@@ -5,7 +5,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
             <p class="card-text">@Model.Price <span class="currency">EGP</span></p>
-            @Html.ActionLink("Add To Cart", "AddToCart","Cart", new { id = Model.Id}, new { @class = "btn btn-primary" })
+            <button class="btn btn-primary addToCart" data-id="@Model.Id"> <i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
         </div>
     </div>
 </div>

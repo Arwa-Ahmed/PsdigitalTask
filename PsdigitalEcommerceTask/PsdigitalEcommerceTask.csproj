@@ -55,6 +55,9 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mvc.Grid.Core, Version=7.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NonFactors.Grid.Core.Mvc5.7.1.3\lib\net45\Mvc.Grid.Core.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.5.0.0\lib\net461\SimpleInjector.dll</HintPath>
     </Reference>
@@ -161,6 +164,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
+    <Compile Include="Areas\admin\Controllers\ProductController.cs" />
     <Compile Include="Attributes\LoggedInAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -197,6 +201,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Libraries\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Libraries\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Libraries\bootstrap\css\bootstrap-grid.rtl.css" />
@@ -335,7 +340,57 @@
     <Content Include="Libraries\bootstrap\scss\mixins\_visually-hidden.scss" />
     <Content Include="Libraries\bootstrap\scss\utilities\_api.scss" />
     <Content Include="Libraries\bootstrap\scss\vendor\_rfs.scss" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="Libraries\font-awesome\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\Products\Index.cshtml" />
+    <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Libraries\font-awesome\css\all.css" />
+    <Content Include="Libraries\font-awesome\css\all.min.css" />
+    <Content Include="Libraries\font-awesome\css\brands.css" />
+    <Content Include="Libraries\font-awesome\css\brands.min.css" />
+    <Content Include="Libraries\font-awesome\css\fontawesome.css" />
+    <Content Include="Libraries\font-awesome\css\fontawesome.min.css" />
+    <Content Include="Libraries\font-awesome\css\regular.css" />
+    <Content Include="Libraries\font-awesome\css\regular.min.css" />
+    <Content Include="Libraries\font-awesome\css\solid.css" />
+    <Content Include="Libraries\font-awesome\css\solid.min.css" />
+    <Content Include="Libraries\font-awesome\css\svg-with-js.css" />
+    <Content Include="Libraries\font-awesome\css\svg-with-js.min.css" />
+    <Content Include="Libraries\font-awesome\css\v4-font-face.css" />
+    <Content Include="Libraries\font-awesome\css\v4-font-face.min.css" />
+    <Content Include="Libraries\font-awesome\css\v4-shims.css" />
+    <Content Include="Libraries\font-awesome\css\v4-shims.min.css" />
+    <Content Include="Libraries\font-awesome\css\v5-font-face.css" />
+    <Content Include="Libraries\font-awesome\css\v5-font-face.min.css" />
+    <Content Include="Libraries\font-awesome\js\all.js" />
+    <Content Include="Libraries\font-awesome\js\all.min.js" />
+    <Content Include="Libraries\font-awesome\js\brands.js" />
+    <Content Include="Libraries\font-awesome\js\brands.min.js" />
+    <Content Include="Libraries\font-awesome\js\conflict-detection.js" />
+    <Content Include="Libraries\font-awesome\js\conflict-detection.min.js" />
+    <Content Include="Libraries\font-awesome\js\fontawesome.js" />
+    <Content Include="Libraries\font-awesome\js\fontawesome.min.js" />
+    <Content Include="Libraries\font-awesome\js\regular.js" />
+    <Content Include="Libraries\font-awesome\js\regular.min.js" />
+    <Content Include="Libraries\font-awesome\js\solid.js" />
+    <Content Include="Libraries\font-awesome\js\solid.min.js" />
+    <Content Include="Libraries\font-awesome\js\v4-shims.js" />
+    <Content Include="Libraries\font-awesome\js\v4-shims.min.js" />
+    <Content Include="Libraries\font-awesome\sprites\brands.svg" />
+    <Content Include="Libraries\font-awesome\sprites\regular.svg" />
+    <Content Include="Libraries\font-awesome\sprites\solid.svg" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -344,6 +399,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\MvcGrid\mvc-grid.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -364,12 +420,12 @@
     <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\View.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\admin\Controllers\" />
     <Folder Include="Areas\admin\Data\" />
-    <Folder Include="Areas\admin\Views\Shared\" />
     <Folder Include="Images\Product\" />
   </ItemGroup>
   <ItemGroup>

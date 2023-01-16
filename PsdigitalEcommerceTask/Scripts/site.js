@@ -1,13 +1,14 @@
 ﻿$(function () {
+    UpdateCartCookie();
     $('.addToCart').on('click', function () {
-        var itemId = parseInt($(this).closest('td').prop('id'));
+        var id = $(this).attr("data-id");
         $.ajax({
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             url: 'Cart/Add',
-            data: "{ 'itemId':' " + getItemId + "' }",
+            data: { 'id': id },
             success: function (data) {
-                $('#spnCart').html(data)
+                $('.cart-count').text(data.CartCount);
             },
             error: function (data) {
                 alert(data);
@@ -43,6 +44,22 @@ function UpdateCartItem(url, parameters) {
                 $('#item-count-' + data.CartId).val(data.ItemCount);
             }
             $('#Subtotal').text(data.CartTotal);
-            $('#cart-count').text(data.CartCount);
+            $('.cart-count').text(data.CartCount);
+
         });
+}
+
+function UpdateCartCookie() {
+    $.ajax({
+        type: 'Get',
+        contentType: 'application/json; charset=utf-8',
+        url: 'Cart/UpdateCartCookie',
+        success: function (data) {
+            $.cookie(data.CookieKey, data.CookieValue);
+            $('.cart-count').html(data.CartCount)
+        },
+        error: function (data) {
+            alert(data);
+        }
+    });
 }

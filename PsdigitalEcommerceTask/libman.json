@@ -5,6 +5,10 @@
     {
       "library": "bootstrap@5.2.3",
       "destination": "Content/bootstrap/"
+    },
+    {
+      "library": "font-awesome@6.2.1",
+      "destination": "Libraries/font-awesome/"
     }
   ]
 }

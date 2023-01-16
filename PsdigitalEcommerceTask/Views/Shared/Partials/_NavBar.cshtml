@@ -11,11 +11,12 @@
             <ul class="nav navbar-nav ms-auto">
                 @if (Session == null || Session["userid"] == null)
                 {
-                    <li class="nav-item">@Html.ActionLink("Login", "Login", "Account",null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link" })</li>
                 }
                 else
                 {
-                    <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Account",null, new { @class = "nav-link" })</li>
+                    <li class="nav-item"><a href="/Cart/Index" class="nav-link d-md-inline-flex align-items-center d-flex"><i class='fa-solid fa-cart-shopping fa-2x pe-2'></i> <span class="fa-1x">(<span class='cart-count'>0</span>)</span></a>  </li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "nav-link" })</li>
                 }
             </ul>
         </div>

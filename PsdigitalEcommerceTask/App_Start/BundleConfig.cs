@@ -24,7 +24,8 @@ namespace PsdigitalEcommerceTask
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Libraries/bootstrap/css/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                       "~/Libraries/font-awesome/css/all.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                    "~/scripts/site.js"));
