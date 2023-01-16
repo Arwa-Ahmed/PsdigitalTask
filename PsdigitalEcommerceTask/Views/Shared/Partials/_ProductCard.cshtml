@@ -5,7 +5,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
             <p class="card-text">@Model.Price <span class="currency">EGP</span></p>
-            <button class="btn btn-primary addToCart" data-id="@Model.Id"> <i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+            <a class="btn btn-primary addToCart" href="/Cart/AddToCart/@Model.Id"> <i class="fa-solid fa-cart-plus"></i> Add To Cart</a>
         </div>
     </div>
 </div>

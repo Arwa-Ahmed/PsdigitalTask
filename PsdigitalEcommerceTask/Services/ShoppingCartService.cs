@@ -16,19 +16,23 @@ namespace PsdigitalEcommerceTask.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public string ShoppingCartId { get; set; }
+        public Guid ShoppingCartId { get; set; } 
         public const string CartCookieKey = "CartId";
         public static ShoppingCartService GetCart(HttpContextBase context)
         { 
             var cart = new ShoppingCartService(new UnitOfWork(new PsdigitalEcommerceTaskContext()));
-            cart.ShoppingCartId = cart.GetCartId(context);
+            string SessionCartId = cart.GetCartId(context);
+            if(SessionCartId != null)
+            {
+                cart.ShoppingCartId = new Guid(SessionCartId);
+            }
             return cart;
         }
 
         public int AddToCart(Product product)
         {
             var cartItem = _unitOfWork.Carts.GetByCondition(
-                c => c.SessionId == new Guid(ShoppingCartId)
+                c => c.SessionId == ShoppingCartId
                 && c.ProductId == product.Id);
 
             if (cartItem == null)
@@ -36,7 +40,7 @@ namespace PsdigitalEcommerceTask.Services
                 cartItem = new Cart()
                 {
                     ProductId = product.Id,
-                    SessionId = new Guid(ShoppingCartId),
+                    SessionId = ShoppingCartId,
                     Quantity = 1,
                     CreatedAt = DateTime.Now
                 };
@@ -53,7 +57,7 @@ namespace PsdigitalEcommerceTask.Services
         {
             // Get the cart
             var cartItem = _unitOfWork.Carts.GetByCondition(
-                  c => c.SessionId == new Guid(ShoppingCartId)
+                  c => c.SessionId == ShoppingCartId
                   && c.Id == id);
 
             int itemCount = 0;
@@ -77,7 +81,7 @@ namespace PsdigitalEcommerceTask.Services
         public void EmptyCart()
         {
             var cartItems = _unitOfWork.Carts.Get(
-                cart => cart.SessionId == new Guid(ShoppingCartId));
+                cart => cart.SessionId == ShoppingCartId);
 
             foreach (var cartItem in cartItems)
             {
@@ -89,55 +93,65 @@ namespace PsdigitalEcommerceTask.Services
         public List<Cart> GetCartItems()
         {
             return _unitOfWork.Carts.Get(
-                cart => cart.SessionId == new Guid(ShoppingCartId)).ToList();
+                cart => cart.SessionId == ShoppingCartId).ToList();
         }
         public int GetCount()
         {
-            int? count = _unitOfWork.Carts.Get(cart => cart.SessionId == new Guid(ShoppingCartId)).Sum(c => c.Quantity);
-            return count ?? 0;
+            int count = 0;
+            if (ShoppingCartId != null)
+            {
+                 count = _unitOfWork.Carts.Get(cart => cart.SessionId == ShoppingCartId).Sum(c => c.Quantity);
+            }
+            
+            return count;
         }
         public decimal GetTotal()
         {
-            decimal? total =(decimal) _unitOfWork.Carts.Get(cart => cart.SessionId == new Guid(ShoppingCartId)).Sum(a => a.Product.Price * a.Quantity);
+            decimal? total =(decimal) _unitOfWork.Carts.Get(cart => cart.SessionId == ShoppingCartId).Sum(a => a.Product.Price * a.Quantity);
 
             return total ?? decimal.Zero;
         }
     
         public string GetCartId(HttpContextBase context)
         {
-            if (context.Request.Cookies[CartCookieKey] == null)
+            if (context.Session["userid"] != null)
             {
-
-                if (context.Session["userid"] != null)
+                var user = _unitOfWork.Users.GetByID(context.Session["userid"]);
+                var CartSession = _unitOfWork.CartSessions.GetByCondition(a => a.UserId == user.Id);
+                if (context.Request.Cookies[CartCookieKey] == null)
                 {
-                    var user = _unitOfWork.Users.GetByID(context.Session["userid"]);
-                    var CartSession = _unitOfWork.CartSessions.GetByCondition(a => a.UserId == user.Id);
-                    if (CartSession == null)
+                    if (context.Session["userid"] != null)
                     {
-                        var NewCartSession = new CartSession { Id = Guid.NewGuid(), UserId = user.Id, CreatedAt = DateTime.Now };
-                        _unitOfWork.CartSessions.Insert(NewCartSession);
-                        _unitOfWork.Save();
+                        user = _unitOfWork.Users.GetByID(context.Session["userid"]);
+                        CartSession = _unitOfWork.CartSessions.GetByCondition(a => a.UserId == user.Id);
+                        if (CartSession == null)
+                        {
+                            var NewCartSession = new CartSession { Id = Guid.NewGuid(), UserId = user.Id, CreatedAt = DateTime.Now };
+                            _unitOfWork.CartSessions.Insert(NewCartSession);
+                            _unitOfWork.Save();
 
-                        CookieService.Save(CartCookieKey, NewCartSession.Id.ToString(),context);
-                    }
-                    else
-                    {
-                        CookieService.Save(CartCookieKey, CartSession.Id.ToString(), context);
+                            CookieService.Save(CartCookieKey, NewCartSession.Id.ToString(), context);
+                        }
+                        else
+                        {
+                            CookieService.Save(CartCookieKey, CartSession.Id.ToString(), context);
+                        }
+                        return context.Response.Cookies[CartCookieKey].Value;
                     }
                 }
-                else
+                else if(context.Request.Cookies[CartCookieKey].Value != CartSession.Id.ToString())
                 {
-                    Guid tempCartId = Guid.NewGuid();
-                    CookieService.Save(CartCookieKey, tempCartId.ToString(),context);
+                    CookieService.Save(CartCookieKey, CartSession.Id.ToString(), context);
+                    return context.Response.Cookies[CartCookieKey].Value;
                 }
-                return context.Response.Cookies.Get(CartCookieKey).Value;
+                return context.Request.Cookies[CartCookieKey].Value;
             }
-            return context.Request.Cookies[CartCookieKey].Value;
+            return null;
         }
         public void MigrateCart(Guid sessionId)
         {
             var cartItems = _unitOfWork.Carts.Get(
-                cart => cart.SessionId == new Guid(ShoppingCartId));
+                cart => cart.SessionId ==  ShoppingCartId);
 
             foreach (var cartItem in cartItems)
             {
@@ -151,7 +165,7 @@ namespace PsdigitalEcommerceTask.Services
         {
             // Get the cart
             var cartItem = _unitOfWork.Carts.GetByCondition(
-                  c => c.SessionId == new Guid(ShoppingCartId)
+                  c => c.SessionId == ShoppingCartId
                   && c.Id == id);
 
             int itemCount = 0;
@@ -176,7 +190,7 @@ namespace PsdigitalEcommerceTask.Services
         {
             // Get the cart
             var cartItem = _unitOfWork.Carts.GetByCondition(
-                  c => c.SessionId == new Guid(ShoppingCartId)
+                  c => c.SessionId == ShoppingCartId
                   && c.Id == id);
 
             if (cartItem != null)

@@ -164,7 +164,9 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
+    <Compile Include="Areas\admin\Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\ProductController.cs" />
+    <Compile Include="Attributes\AdminLoggedInAttribute.cs" />
     <Compile Include="Attributes\LoggedInAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -199,6 +201,7 @@
     <Compile Include="Services\ShoppingCartService.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\MvcGrid\mvc-grid.css" />
@@ -350,11 +353,11 @@
     <Content Include="Libraries\font-awesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\admin\Views\Products\Create.cshtml" />
-    <Content Include="Areas\admin\Views\Products\Details.cshtml" />
-    <Content Include="Areas\admin\Views\Products\Edit.cshtml" />
-    <Content Include="Areas\admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\Product\Index.cshtml" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
+    <Content Include="Areas\admin\Views\User\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Libraries\font-awesome\css\all.css" />
     <Content Include="Libraries\font-awesome\css\all.min.css" />
@@ -427,6 +430,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Data\" />
     <Folder Include="Images\Product\" />
+    <Folder Include="Views\Ajax\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

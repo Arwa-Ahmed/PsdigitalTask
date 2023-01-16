@@ -1,4 +1,5 @@
 ﻿using PsdigitalEcommerceTask.Interfaces;
+using PsdigitalEcommerceTask.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,17 @@ namespace PsdigitalEcommerceTask.Controllers
         {
            ViewBag.Products =  _unitOfWork.Products.Get(p=>p.DeletedAt == null);
             return View();
+        }
+        public ActionResult UpdateCartCookie()
+        {
+            var cart = ShoppingCartService.GetCart(this.HttpContext);
+
+            var results = new
+            {
+                CartCount = cart.GetCount(),
+            };
+
+            return Json(results, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,41 +1,25 @@
 ﻿$(function () {
     UpdateCartCookie();
-    $('.addToCart').on('click', function () {
-        var id = $(this).attr("data-id");
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            url: 'Cart/Add',
-            data: { 'id': id },
-            success: function (data) {
-                $('.cart-count').text(data.CartCount);
-            },
-            error: function (data) {
-                alert(data);
-            }
-        });
-    });
-
-    $("#DeleteCartItem").on('click', function (e) {
+ 
+    $(document).on('click', "#DeleteCartItem", function (e) {
         e.preventDefault();
+        console.log("Dd")
         var id = $(this).attr("data-id");
         if (id != '') {
             UpdateCartItem("/Cart/RemoveCart", { "id": id })
         }
-
     })
-
     $(".item-quantity").on('change', function (e) {
         e.preventDefault();
         var id = $(this).closest("tr").attr("data-id");
         if (id != '') {
             UpdateCartItem("/Cart/UpdateQuantityInCart", { "id": id ,'quantity':$(this).val()})
         }
-
     })
 })
 
 function UpdateCartItem(url, parameters) {
+    console.log("Dd")
     $.post(url, parameters,
         function (data) {
             if (data.ItemCount == 0) {
@@ -53,13 +37,12 @@ function UpdateCartCookie() {
     $.ajax({
         type: 'Get',
         contentType: 'application/json; charset=utf-8',
-        url: 'Cart/UpdateCartCookie',
+        url: '/Home/UpdateCartCookie',
         success: function (data) {
-            $.cookie(data.CookieKey, data.CookieValue);
             $('.cart-count').html(data.CartCount)
         },
         error: function (data) {
-            alert(data);
+            console.log(data);
         }
     });
 }

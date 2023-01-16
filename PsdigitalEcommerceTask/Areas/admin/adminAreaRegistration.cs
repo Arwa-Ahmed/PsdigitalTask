@@ -15,9 +15,9 @@ namespace PsdigitalEcommerceTask.Areas.admin
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "admin_default",
+                "admin",
                 "admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index",controller = "product", id = UrlParameter.Optional }
             );
         }
     }

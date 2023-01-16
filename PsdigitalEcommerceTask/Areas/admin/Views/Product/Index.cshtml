@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PsdigitalEcommerceTask.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h5>Products</h5>
+<hr />
+<a href="/admin/product/create" class="btn btn-dark">Add New Product</a>
+<br />
+<br />
+
+@Html.Partial("Partials/_Messages")
+
+@using NonFactors.Mvc.Grid;
+
+@(Html.Grid(Model).Build(columns =>
+    {
+        columns.Add().Encoded(false).RenderedAs(d => Html.Raw("<img src='/Images/Product/"+d.Image+"' class='img-thumbnail' width='100'/>"));
+        columns.Add(model => model.Title).Titled("Title");
+        columns.Add(model => model.Price).Titled("Price");
+       columns.Add().Encoded(false).RenderedAs(d =>
+        Html.Raw("<a data-toggle='modal' data-target='.bs-details-modal-lg' href='/admin/Product/Edit/" + d.Id + "'><span data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' aria-hidden='true'><i class='fa-solid fa-pen-to-square'></i></span></a>"));
+        })
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)

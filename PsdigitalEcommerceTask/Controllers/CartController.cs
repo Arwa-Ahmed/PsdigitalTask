@@ -34,7 +34,7 @@ namespace PsdigitalEcommerceTask.Controllers
             };
             return View(cart);
         }
-        [HttpPost]
+
         public ActionResult AddToCart(int id)
         {
             var product = _unitOfWork.Products.GetByID(id);
@@ -43,11 +43,7 @@ namespace PsdigitalEcommerceTask.Controllers
 
             cart.AddToCart(product);
 
-            var results = new
-            {
-                CartCount = cart.GetCount(),
-            };
-            return Json(results);
+            return RedirectToAction("Index");
         }
 
 
@@ -97,20 +93,7 @@ namespace PsdigitalEcommerceTask.Controllers
             return Json(results);
         }
 
-        public ActionResult UpdateCartCookie()
-        {
-
-            var cart = ShoppingCartService.GetCart(this.HttpContext);
-         
-            var results = new
-            {
-                CookieValue = cart.ShoppingCartId,
-                CartCount = cart.GetCount(),
-                CookieKey = "CartId"          
-            };
-            
-            return Json(results);
-        }
+        
 
     }
 }
